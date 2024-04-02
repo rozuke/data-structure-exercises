@@ -110,7 +110,7 @@ public class RainsOfReason {
         return !(firstCell ^ secondCell);
 
     }
-    boolean isCellBlack(String cell) {
+    static boolean isCellBlack(String cell) {
         int letter = (char) cell.charAt(0);
         int number = Integer.parseInt(String.valueOf(cell.charAt(1)));
         return ((letter % 2 != 0) && (number % 2 != 0)) || ((letter % 2 == 0) && (number % 2 == 0));
