@@ -502,10 +502,208 @@ public class EasyLevel {
         return profit;
     }
 
+    /*
+    136. Single Number
+
+    Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+    You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+    Example 1:
+    Input: nums = [2,2,1]
+    Output: 1
+
+    Example 2:
+    Input: nums = [4,1,2,1,2]
+    Output: 4
+
+    Example 3:
+    Input: nums = [1]
+    Output: 1
+     */
+
+    public int singleNumber(int[] nums) {
+        if (nums.length == 1 ) return nums[0];
+
+        int result = nums[0] ^ nums[1];
+
+        for (int i = 2; i < nums.length; i++) {
+            result = result ^ nums[i];
+        }
+
+        return result;
+    }
+
+    /*
+    141. Linked List Cycle
+
+    Given head, the head of a linked list, determine if the linked list has a cycle in it.
+    There is a cycle in a linked list if there is some node in the list that can be reached again by continuously
+    following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is
+    connected to. Note that pos is not passed as a parameter.
+    Return true if there is a cycle in the linked list. Otherwise, return false.
+
+    Example 1:
+
+    3 -> 2 -> 0 -> -4
+        /            \
+        \____________/
+
+    Input: head = [3,2,0,-4], pos = 1
+    Output: true
+    Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+
+    Example 2:
+
+    1 -> 2
+    /     \
+    \_____/
+
+    Input: head = [1,2], pos = 0
+    Output: true
+    Explanation: There is a cycle in the linked list, where the tail connects to the 0th node.
+
+    Example 3:
+
+    1 -> null
+
+    Input: head = [1], pos = -1
+    Output: false
+    Explanation: There is no cycle in the linked list.
+    3 2 0 4   2
+     */
+
+    public boolean hasCycle(ListNode head) {
+        ListNode slowPtr = head;
+        ListNode fastPtr = head;
+
+        while(slowPtr != null && fastPtr != null && fastPtr.next != null) {
+            slowPtr = slowPtr.next;
+            fastPtr = fastPtr.next.next;
+
+            if (slowPtr == fastPtr) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+    160. Intersection of Two Linked Lists
+    Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect.
+    If the two linked lists have no intersection at all, return null.
+    For example, the following two linked lists begin to intersect at node c1:
+
+    A:       a1 -> a2 ->
+                         \
+                          c1 -> c2 -> c3
+                         /
+    B: b1 -> b2 -> b3 ->
+
+    The test cases are generated such that there are no cycles anywhere in the entire linked structure.
+    Note that the linked lists must retain their original structure after the function returns.
+
+    Custom Judge:
+    The inputs to the judge are given as follows (your program is not given these inputs):
+    * intersectVal - The value of the node where the intersection occurs. This is 0 if there is no intersected node.
+    * listA - The first linked list.
+    * listB - The second linked list.
+    * skipA - The number of nodes to skip ahead in listA (starting from the head) to get to the intersected node.
+    * skipB - The number of nodes to skip ahead in listB (starting from the head) to get to the intersected node.
+    The judge will then create the linked structure based on these inputs and pass the two heads, headA and headB to
+    your program. If you correctly return the intersected node, then your solution will be accepted.
+
+    Example 1:
+
+    A:         4 -> 1 ->
+                         \
+                          8 -> 4 -> 5
+                         /
+    B:    5 -> 6 -> 1 ->
+
+    Input: intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+    Output: Intersected at '8'
+    Explanation: The intersected node's value is 8 (note that this must not be 0 if the two lists intersect).
+    From the head of A, it reads as [4,1,8,4,5]. From the head of B, it reads as [5,6,1,8,4,5]. There are 2 nodes
+    before the intersected node in A; There are 3 nodes before the intersected node in B.
+    - Note that the intersected node's value is not 1 because the nodes with value 1 in A and B (2nd node in A and 3rd
+    node in B) are different node references. In other words, they point to two different locations in memory, while
+    the nodes with value 8 in A and B (3rd node in A and 4th node in B) point to the same location in memory.
+
+    Example 2:
+
+    A:    1 -> 9 -> 1 ->
+                         \
+                          2 -> 4
+                         /
+    B:              3 ->
+
+    Input: intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+    Output: Intersected at '2'
+    Explanation: The intersected node's value is 2 (note that this must not be 0 if the two lists intersect).
+    From the head of A, it reads as [1,9,1,2,4]. From the head of B, it reads as [3,2,4]. There are 3 nodes before the
+    intersected node in A; There are 1 node before the intersected node in B.
+    Example 3:
+
+    A:    2 -> 6 -> 4
+
+    B:         3 -> 5
+
+    Input: intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+    Output: No intersection
+    Explanation: From the head of A, it reads as [2,6,4]. From the head of B, it reads as [1,5]. Since the two lists do
+    not intersect, intersectVal must be 0, while skipA and skipB can be arbitrary values.
+    Explanation: The two lists do not intersect, so return null.
+     */
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+
+        Map<Integer, ListNode> map1 = new HashMap<>();
+        Map<Integer, ListNode> map2 = new HashMap<>();
+        int pos1 = 0, pos2 = 0;
+
+        while(headA != null || headB !=null) {
+            if (headA != null) {
+                map1.put(pos1++, headA);
+                headA = headA.next;
+            }
+            if (headB != null) {
+                map2.put(pos2++, headB);
+                headB = headB.next;
+            }
+        }
+
+        for (int i = 0; i < map2.size(); i++) {
+            if (map1.containsValue(map2.get(i))) return map2.get(i);
+        }
+        return null;
+    }
+
+    public ListNode getIntersectionNode_BetterSolution(ListNode headA, ListNode headB) {
+            if( headA == null || headB == null) return null;
+
+            ListNode aPointer = headA;
+            ListNode bPointer = headB;
+
+            while (aPointer != bPointer) {
+                if (aPointer == null) {
+                    aPointer = headB;
+                } else {
+                    aPointer = aPointer.next;
+                }
+
+                if (bPointer == null) {
+                    bPointer = headA;
+                } else {
+                    bPointer = bPointer.next;
+                }
+            }
+            return aPointer;
+    }
+
     public static void main(String[] args) {
 
         EasyLevel test = new EasyLevel();
-        test.maxProfit(new int [] {7, 1, 5, 3, 6, 4});
+
 
     }
 }
