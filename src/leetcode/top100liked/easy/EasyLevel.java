@@ -681,23 +681,176 @@ public class EasyLevel {
     public ListNode getIntersectionNode_BetterSolution(ListNode headA, ListNode headB) {
             if( headA == null || headB == null) return null;
 
-            ListNode aPointer = headA;
-            ListNode bPointer = headB;
+        ListNode aPointer = headA;
+        ListNode bPointer = headB;
 
-            while (aPointer != bPointer) {
-                if (aPointer == null) {
-                    aPointer = headB;
-                } else {
-                    aPointer = aPointer.next;
-                }
-
-                if (bPointer == null) {
-                    bPointer = headA;
-                } else {
-                    bPointer = bPointer.next;
-                }
+        while (aPointer != bPointer) {
+            if (aPointer == null) {
+                aPointer = headB;
+            } else {
+                aPointer = aPointer.next;
             }
-            return aPointer;
+
+            if (bPointer == null) {
+                bPointer = headA;
+            } else {
+                bPointer = bPointer.next;
+            }
+        }
+        return aPointer;
+    }
+
+    /*
+    169. Majority Element
+
+    Given an array nums of size n, return the majority element.
+    The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element
+    always exists in the array.
+
+    Example 1:
+
+    Input: nums = [3,2,3]
+    Output: 3
+
+    Example 2:
+
+    Input: nums = [2,2,1,1,1,2,2]
+
+    Output: 2
+     */
+
+    public int majorityElement(int[] nums) {
+        if (nums.length == 0) return 0;
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i : nums) {
+            if (map.containsKey(i)) {
+                map.put(i, map.get(i) + 1);
+            } else {
+                map.put(i, 1);
+            }
+        }
+
+        int greater = 0;
+        int result = 0;
+        for (int j: map.keySet()) {
+            if (map.get(j) > greater) {
+                result = j;
+                greater = map.get(j);
+            }
+        }
+
+        return result;
+    }
+
+    public int majorityElementBetterSolution(int[] nums) {
+        if (nums.length == 0) return -1; // or any appropriate default value
+
+        int majorityElement = nums[0];
+        int count = 1;
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == majorityElement) {
+                count++;
+            } else if (count == 0) {
+                majorityElement = nums[i];
+                count = 1;
+            } else {
+                count--;
+            }
+        }
+
+        // Validate if majorityElement is the actual majority element
+        count = 0;
+        for (int num : nums) {
+            if (num == majorityElement) {
+                count++;
+            }
+        }
+
+        return count > nums.length / 2 ? majorityElement : -1;
+
+    }
+
+    /*
+    206. Reverse Linked List
+    Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+    Example 1:
+    Input: head = [1,2,3,4,5]
+    Output: [5,4,3,2,1]
+
+    Example 2:
+    Input: head = [1,2]
+    Output: [2,1]
+
+    Example 3:
+    Input: head = []
+    Output: []
+    */
+    public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode p1 = null;
+        ListNode p2 = head;
+        ListNode p3 = head.next;
+
+        while (p2 != null) {
+            p2.next = p1;
+
+            p1 = p2;
+            p2 = p3;
+
+            if (p3 != null) {
+                p3 = p3.next;
+            }
+        }
+
+        return p1;
+
+    }
+
+    /*
+    234. Palindrome Linked List
+
+    Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+    Example 1:
+    Input: head = [1,2,2,1]
+    Output: true
+
+    Example 2:
+    Input: head = [1,2]
+    Output: false
+     */
+
+    public boolean isPalindrome(ListNode head) {
+
+        if (head.next == null ) return true;
+
+        if (head.next.next == null) return head.val == head.next.val;
+
+        List<Integer> list = new ArrayList<>();
+
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+
+        int last = list.size() - 1;
+        int first = 0;
+
+        for(int i = 0; i < list.size() / 2; i++) {
+
+            if (!list.get(first).equals(list.get(last))) return  false;
+            last--;
+            first++;
+        }
+
+        return true;
+
     }
 
     public static void main(String[] args) {
