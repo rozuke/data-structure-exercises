@@ -853,6 +853,140 @@ public class EasyLevel {
 
     }
 
+    /*
+    283. Move Zeroes
+
+    Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero
+    elements.
+    Note that you must do this in-place without making a copy of the array.
+
+    Example 1:
+    Input: nums = [0,1,0,3,12]
+    Output: [1,3,12,0,0]
+
+    Example 2:
+    Input: nums = [0]
+    Output: [0]
+     */
+    public void moveZeroes(int[] nums) {
+
+        int n = nums.length;
+        int i =0;
+        for (int j =0;j<n;j++)
+        {
+            if(nums[j] != 0)
+            {
+                nums[i] = nums[j];
+                i++;
+            }
+        }
+        for(int k = i ; k<n ;k++)
+        {
+            nums[k] = 0;
+        }
+
+    }
+
+    /*
+    704. Binary Search
+
+    Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to
+    search target in nums. If target exists, then return its index. Otherwise, return -1.
+    You must write an algorithm with O(log n) runtime complexity.
+
+    Example 1:
+    Input: nums = [-1,0,3,5,9,12], target = 9
+    Output: 4
+    Explanation: 9 exists in nums and its index is 4
+
+    Example 2:
+    Input: nums = [-1,0,3,5,9,12], target = 2
+    Output: -1
+    Explanation: 2 does not exist in nums so return -1
+     */
+
+    public int search(int[] nums, int target) {
+
+        int left = 0, right = nums.length - 1;
+
+        while (left <= right) {
+
+            int middle = (left + right) / 2;
+            if (nums[middle] == target) return middle;
+            if (target < nums[middle]) right = middle - 1;
+            else left = middle + 1;
+
+        }
+        return -1;
+
+    }
+
+    /*
+    226. Invert Binary Tree
+
+    Given the root of a binary tree, invert the tree, and return its root.
+
+    Example 1:
+    https://assets.leetcode.com/uploads/2021/03/14/invert1-tree.jpg
+    Input: root = [4,2,7,1,3,6,9]
+    Output: [4,7,2,9,6,3,1]
+
+    Example 2:
+    https://assets.leetcode.com/uploads/2021/03/14/invert2-tree.jpg
+    Input: root = [2,1,3]
+    Output: [2,3,1]
+
+    Example 3:
+    Input: root = []
+    Output: []
+     */
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) return root;
+
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+
+        root.left = right;
+        root.right = left;
+
+        return root;
+    }
+
+    /*
+    543. Diameter of Binary Tree
+
+    Given the root of a binary tree, return the length of the diameter of the tree.
+    The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or
+    may not pass through the root.
+    The length of a path between two nodes is represented by the number of edges between them.
+
+    Example 1:
+    https://assets.leetcode.com/uploads/2021/03/06/diamtree.jpg
+    Input: root = [1,2,3,4,5]
+    Output: 3
+    Explanation: 3 is the length of the path [4,2,1,3] or [5,2,1,3].
+
+    Example 2:
+    Input: root = [1,2]
+    Output: 1
+     */
+    public int diameterOfBinaryTree(TreeNode root) {
+
+        int diameter = Integer.MIN_VALUE;
+        dfs(root, diameter);
+        return diameter;
+
+    }
+
+    public int dfs(TreeNode root, int diameter) {
+        if (root == null) return 0;
+        int left = dfs(root.left, diameter);
+        int right = dfs(root.right, diameter);
+        diameter = Math.max(diameter, left + right);
+        return 1 + Math.max(left, right);
+    }
+
+
     public static void main(String[] args) {
 
         EasyLevel test = new EasyLevel();
