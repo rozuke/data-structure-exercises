@@ -17,20 +17,20 @@ public class EasyLevel {
     Output: [0,1]
     Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
     */
-    public int[] mysolutionTwoSum(int [] nums, int target) {
-            int [] res = new int [2];
-            for (int i = 0; i < nums.length ; i++){
-                for (int j = i+1; j < nums.length; j++) {
-                    if (nums[i] + nums[j] == target){
-                        res[0] = i;
-                        res[1] = j;
+    public int[] mysolutionTwoSum(int[] nums, int target) {
+        int[] res = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] + nums[j] == target) {
+                    res[0] = i;
+                    res[1] = j;
 
-                    }
-                    continue;
                 }
                 continue;
             }
-            return res;
+            continue;
+        }
+        return res;
     }
 
     /*
@@ -63,7 +63,7 @@ public class EasyLevel {
     Explanation: III = 3.
     */
     public int romanToInt(String s) {
-        Map<String, Integer> romanNumbers= new HashMap<>();
+        Map<String, Integer> romanNumbers = new HashMap<>();
         romanNumbers.put("I", 1);
         romanNumbers.put("V", 5);
         romanNumbers.put("X", 10);
@@ -212,13 +212,23 @@ public class EasyLevel {
         }
         return headNode.next;
     }
+
     public static class ListNode {
-    int val;
-    ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- }
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
 
     /*
     35. Search Insert Position
@@ -242,14 +252,14 @@ public class EasyLevel {
     public static int searchInsert(int[] array, int target) {
 
         int left = 0;
-        int right = array.length -1 ;
+        int right = array.length - 1;
 
         while (left <= right) {
             int mid = (left + right) / 2;
             if (array[mid] < target) {
                 left = mid + 1;
             } else if (array[mid] > target) {
-                right = mid -1;
+                right = mid - 1;
             } else {
                 return mid;
             }
@@ -290,7 +300,7 @@ public class EasyLevel {
         return nFib;
     }
 
-    public int fib(int n ) {
+    public int fib(int n) {
         int n1 = 1;
         int n2 = 2;
 
@@ -327,22 +337,29 @@ public class EasyLevel {
      */
 
     public static class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
- }
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
 
-        if ( root == null ) return list;
-        return inorderTraversal(root,list);
+        if (root == null) return list;
+        return inorderTraversal(root, list);
     }
 
     private List<Integer> inorderTraversal(TreeNode root, List<Integer> list) {
@@ -386,6 +403,7 @@ public class EasyLevel {
     public boolean isSymmetric(TreeNode root) {
         return isSymetricTree(root, root);
     }
+
     public boolean isSymetricTree(TreeNode node1, TreeNode node2) {
         if (node1 == null && node2 == null) return true;
         if (node1 == null || node2 == null) return false;
@@ -447,14 +465,14 @@ public class EasyLevel {
 
         List<List<Integer>> pascalTriangle = new ArrayList<>();
         pascalTriangle.add(Arrays.asList(1));
-        if (numRows == 1 ) return pascalTriangle;
-        pascalTriangle.add(Arrays.asList(1,1));
+        if (numRows == 1) return pascalTriangle;
+        pascalTriangle.add(Arrays.asList(1, 1));
 
-        for(int i = 1; i <= numRows - 2; i++) {
+        for (int i = 1; i <= numRows - 2; i++) {
             int auxCount = pascalTriangle.get(i).size();
             List<Integer> auxList = new ArrayList<>();
             auxList.add(1);
-            for(int j = 0; j < auxCount - 1; j++) {
+            for (int j = 0; j < auxCount - 1; j++) {
                 int a = pascalTriangle.get(i).get(j);
                 int b = pascalTriangle.get(i).get(j + 1);
                 int c = a + b;
@@ -522,7 +540,7 @@ public class EasyLevel {
      */
 
     public int singleNumber(int[] nums) {
-        if (nums.length == 1 ) return nums[0];
+        if (nums.length == 1) return nums[0];
 
         int result = nums[0] ^ nums[1];
 
@@ -576,7 +594,7 @@ public class EasyLevel {
         ListNode slowPtr = head;
         ListNode fastPtr = head;
 
-        while(slowPtr != null && fastPtr != null && fastPtr.next != null) {
+        while (slowPtr != null && fastPtr != null && fastPtr.next != null) {
             slowPtr = slowPtr.next;
             fastPtr = fastPtr.next.next;
 
@@ -661,7 +679,7 @@ public class EasyLevel {
         Map<Integer, ListNode> map2 = new HashMap<>();
         int pos1 = 0, pos2 = 0;
 
-        while(headA != null || headB !=null) {
+        while (headA != null || headB != null) {
             if (headA != null) {
                 map1.put(pos1++, headA);
                 headA = headA.next;
@@ -679,7 +697,7 @@ public class EasyLevel {
     }
 
     public ListNode getIntersectionNode_BetterSolution(ListNode headA, ListNode headB) {
-            if( headA == null || headB == null) return null;
+        if (headA == null || headB == null) return null;
 
         ListNode aPointer = headA;
         ListNode bPointer = headB;
@@ -723,7 +741,7 @@ public class EasyLevel {
         if (nums.length == 0) return 0;
         Map<Integer, Integer> map = new HashMap<>();
 
-        for(int i : nums) {
+        for (int i : nums) {
             if (map.containsKey(i)) {
                 map.put(i, map.get(i) + 1);
             } else {
@@ -733,7 +751,7 @@ public class EasyLevel {
 
         int greater = 0;
         int result = 0;
-        for (int j: map.keySet()) {
+        for (int j : map.keySet()) {
             if (map.get(j) > greater) {
                 result = j;
                 greater = map.get(j);
@@ -828,7 +846,7 @@ public class EasyLevel {
 
     public boolean isPalindrome(ListNode head) {
 
-        if (head.next == null ) return true;
+        if (head.next == null) return true;
 
         if (head.next.next == null) return head.val == head.next.val;
 
@@ -842,9 +860,9 @@ public class EasyLevel {
         int last = list.size() - 1;
         int first = 0;
 
-        for(int i = 0; i < list.size() / 2; i++) {
+        for (int i = 0; i < list.size() / 2; i++) {
 
-            if (!list.get(first).equals(list.get(last))) return  false;
+            if (!list.get(first).equals(list.get(last))) return false;
             last--;
             first++;
         }
@@ -871,17 +889,14 @@ public class EasyLevel {
     public void moveZeroes(int[] nums) {
 
         int n = nums.length;
-        int i =0;
-        for (int j =0;j<n;j++)
-        {
-            if(nums[j] != 0)
-            {
+        int i = 0;
+        for (int j = 0; j < n; j++) {
+            if (nums[j] != 0) {
                 nums[i] = nums[j];
                 i++;
             }
         }
-        for(int k = i ; k<n ;k++)
-        {
+        for (int k = i; k < n; k++) {
             nums[k] = 0;
         }
 
@@ -986,11 +1001,67 @@ public class EasyLevel {
         return 1 + Math.max(left, right);
     }
 
+    /*
+    1945. Sum of Digits of String After Convert
+
+    You are given a string s consisting of lowercase English letters, and an integer k. First, convert s into an integer
+    by replacing each letter with its position in the alphabet (i.e., replace 'a' with 1, 'b' with 2, ..., 'z' with 26).
+    Then, transform the integer by replacing it with the sum of its digits. Repeat the transform operation k times in
+    total.
+
+    For example, if s = "zbax" and k = 2, then the resulting integer would be 8 by the following operations:
+    Convert: "zbax" ➝ "(26)(2)(1)(24)" ➝ "262124" ➝ 262124
+    Transform #1: 262124 ➝ 2 + 6 + 2 + 1 + 2 + 4 ➝ 17
+    Transform #2: 17 ➝ 1 + 7 ➝ 8
+    Return the resulting integer after performing the operations described above.
+
+    Example 1:
+    Input: s = "iiii", k = 1
+    Output: 36
+    Explanation: The operations are as follows:
+    - Convert: "iiii" ➝ "(9)(9)(9)(9)" ➝ "9999" ➝ 9999
+    - Transform #1: 9999 ➝ 9 + 9 + 9 + 9 ➝ 36
+    Thus the resulting integer is 36.
+
+    Example 2:
+    Input: s = "leetcode", k = 2
+    Output: 6
+    Explanation: The operations are as follows:
+    - Convert: "leetcode" ➝ "(12)(5)(5)(20)(3)(15)(4)(5)" ➝ "12552031545" ➝ 12552031545
+    - Transform #1: 12552031545 ➝ 1 + 2 + 5 + 5 + 2 + 0 + 3 + 1 + 5 + 4 + 5 ➝ 33
+    - Transform #2: 33 ➝ 3 + 3 ➝ 6
+    Thus the resulting integer is 6.
+
+    Example 3:
+    Input: s = "zbax", k = 2
+    Output: 8`
+     */
+
+    public int getLucky(String s, int k) {
+        int sum = 0;
+        for (char ch : s.toCharArray()) {
+            int digit = ch - 'a' + 1;
+            sum += digit % 10;
+            digit /= 10;
+            sum += digit;
+        }
+        k--;
+        while (k > 0) {
+            int temp = sum;
+            sum = 0;
+            while (temp != 0) {
+                sum += temp % 10;
+                temp /= 10;
+            }
+            k--;
+        }
+        return sum;
+    }
 
     public static void main(String[] args) {
 
         EasyLevel test = new EasyLevel();
-
+        System.out.println(test.getLucky("leetcode", 2));
 
     }
 }
