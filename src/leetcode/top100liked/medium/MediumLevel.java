@@ -80,27 +80,58 @@ public class MediumLevel {
 
         for (int end = 0; end < s.length(); end++) {
             char currentChar = s.charAt(end);
-
-            // If the character is already in the map and its index is greater than or equal to start
             if (map.containsKey(currentChar) && map.get(currentChar) >= start) {
-                // Update start to the next position after the last occurrence
                 start = map.get(currentChar) + 1;
             }
-
-            // Update the last index of the current character
             map.put(currentChar, end);
-
-            // Calculate the length of the current substring and update maxLength
             maxLength = Math.max(maxLength, end - start + 1);
         }
-
         return maxLength;
-
     }
+
+    /*
+    5. Longest Palindromic Substring
+
+    Given a string s, return the longest palindromic substring in s.
+
+    Example 1:
+    Input: s = "babad"
+    Output: "bab"
+    Explanation: "aba" is also a valid answer.
+
+    Example 2:
+    Input: s = "cbbd"
+    Output: "bb"
+     */
+    public String longestPalindrome(String s) {
+         if (s == null || s.length() < 1) return "";
+         int start = 0;
+         int end = 0;
+
+         for (int i = 0; i < s.length(); i++) {
+             int len1 = expandFromMiddle(s, i, i);
+             int len2 = expandFromMiddle(s, i, i + 1);
+             int len = Math.max(len1, len2);
+             if (len > end - start) {
+                 start = i - ((len - 1) / 2);
+                 end = i + (len / 2);
+             }
+         }
+         return s.substring(start, end + 1);
+    }
+    public int expandFromMiddle(String s, int left, int right) {
+        if (s == null || left > right) return 0;
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
 
     public static void main(String[] args) {
         MediumLevel test = new MediumLevel();
 
-        System.out.println(test.lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(test.longestPalindrome("cbbd"));
     }
 }
